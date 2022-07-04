@@ -1,0 +1,12 @@
+{
+  "client_name": "John Doe",
+  "__client_slug": "{{ cookiecutter.client_name | slugify }}",
+  "project_name": "My Python project",
+  "__project_slug": "{{ cookiecutter.project_name | slugify }}",
+  "__project_uid": "{% now 'utc', '%Y%m%d' %}_{{ cookiecutter.__client_slug }}_{{ cookiecutter.__project_slug }}",
+  "__package_name": "{{ cookiecutter.__project_slug | replace('-', '_') }}",
+  "_extensions": [
+    "cookiecutter.extensions.SlugifyExtension",
+    "cookiecutter.extensions.RandomStringExtension"
+  ]
+}

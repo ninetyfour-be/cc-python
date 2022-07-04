@@ -1,0 +1,11 @@
+name = "{{ cookiecutter.project_name }}"
+version = "0.1.0"
+authors = ["Ninety Four <ninetyfour.be@gmail.com>"]
+readme = "README.md"
+packages = [
+  { include = "{{ cookiecutter.__package_name }}", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8, <3.11"
+click = ">=8.0.1"
