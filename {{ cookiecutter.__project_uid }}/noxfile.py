@@ -10,6 +10,14 @@ PYTHON_VERSIONS = ["3.8", "3.9", "3.10"]
 SOURCES = ["src", "tests", "noxfile.py"]
 
 
+@nox.session(python=PYTHON_VERSIONS[0])
+def doc(session: nox.Session) -> None:
+    """Build the documentation."""
+    session.install("sphinx", "sphinx_click", "myst-parser", "rinohtype", ".")
+    args = session.posargs or ["rinoh"]
+    session.run("sphinx-build", "-b", args[0], "docs", "build/docs")
+
+
 @nox.session(python=PYTHON_VERSIONS[0], reuse_venv=True)
 def format(session: nox.Session) -> None:
     """Format the code."""
