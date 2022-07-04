@@ -9,3 +9,6 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.8, <3.11"
 click = ">=8.0.1"
+
+[tool.poetry.dev-dependencies]
+nox = ">=2022.1.7"
