@@ -1,6 +1,6 @@
 # Reference
 
-The following section provides an overview of the API of the project.
+The following section describes the public API of the project.
 
 ## {{ cookiecutter.__package_name }}
 
