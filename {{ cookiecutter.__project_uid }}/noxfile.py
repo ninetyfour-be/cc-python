@@ -69,3 +69,4 @@ def coverage(session: nox.Session) -> None:
     if Path().glob(".coverage.*"):
         session.install("coverage")
         session.run("coverage", "combine")
+        session.run("coverage", "report", "--show-missing" "--fail-under=80")
