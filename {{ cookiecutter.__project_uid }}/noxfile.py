@@ -1,5 +1,6 @@
 """Noxfile for {{ cookiecutter.project_name }}."""
 from pathlib import Path
+import shutil
 
 import nox
 
@@ -16,6 +17,17 @@ def doc(session: nox.Session) -> None:
     session.install("sphinx", "sphinx_click", "myst-parser", "rinohtype", ".")
     args = session.posargs or ["rinoh"]
     session.run("sphinx-build", "-b", args[0], "docs", "build/docs")
+    # Clean build
+    for path in Path("build").glob("**/*[!(.pdf)]"):
+        if path.is_file():
+            path.unlink()
+    for path in [Path("build") / p for p in {"lib", "bdist.linux-x86_64", "docs/.doctrees"}]:
+        shutil.rmtree(path)
+
+
+@nox.session(python=False)
+def release(session: nox.Session) -> None:
+    """Build a release."""
 
 
 @nox.session(python=PYTHON_VERSIONS[0], reuse_venv=True)
