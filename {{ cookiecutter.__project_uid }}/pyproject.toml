@@ -1,3 +1,4 @@
+[tool.poetry]
 name = "{{ cookiecutter.project_name }}"
 version = "0.1.0"
 authors = ["Ninety Four <ninetyfour.be@gmail.com>"]
