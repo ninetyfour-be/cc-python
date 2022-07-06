@@ -28,6 +28,30 @@ def doc(session: nox.Session) -> None:
 @nox.session(python=False)
 def release(session: nox.Session) -> None:
     """Build a release."""
+    import sys
+    sys.path.insert(0, "src")
+    from {{ cookiecutter.__package_name }} import __version__ as version
+
+    session.run("nox", "-s", "doc")
+    session.run(
+        "cp",
+        f"build/docs/{{ cookiecutter.__project_slug }}_{version}.pdf",
+        f"{{ cookiecutter.__project_slug }}_{version}.pdf"
+    )
+    session.run(
+        "zip",
+        "-r",
+        "-9",
+        f"{{ cookiecutter.__project_uid }}_{version}.zip",
+        f"{{ cookiecutter.__project_slug }}_{version}.pdf",
+        "pyproject.toml",
+        "src",
+        "tests",
+        "-x",
+        "**/__pycache__**",
+        "**/{{ cookiecutter.__package_name }}.egg-info**",
+    )
+    session.run("rm", f"{{ cookiecutter.__project_slug }}_{version}.pdf")
 
 
 @nox.session(python=PYTHON_VERSIONS[0], reuse_venv=True)
