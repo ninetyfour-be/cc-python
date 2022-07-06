@@ -13,3 +13,6 @@ click = ">=8.0.1"
 
 [tool.poetry.dev-dependencies]
 nox = ">=2022.1.7"
+
+[tool.poetry.scripts]
+{{ cookiecutter.__project_slug }} = "{{ cookiecutter.__package_name }}.__cli__:main"
