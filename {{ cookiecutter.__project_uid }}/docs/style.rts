@@ -1,0 +1,46 @@
+[STYLESHEET]
+name=NinetyFour
+base=sphinx
+
+[VARIABLES]
+sans_typeface=Inter
+primary=#ffcc00
+secondary=#ff80b2
+
+[linked reference]
+font_color=$(secondary)
+
+[external hyperlink]
+font_color=$(secondary)
+
+[heading level 1]
+number_format=None
+
+[heading level 2]
+number_format=None
+font_weight=BOLD
+typeface=$(sans_typeface)
+font_color=#000000
+
+[heading level 3]
+number_format=None
+font_weight=BOLD
+typeface=$(sans_typeface)
+
+[heading level 4]
+number_format=None
+font_weight=BOLD
+typeface=$(sans_typeface)
+
+[heading level 5]
+number_format=None
+font_weight=BOLD
+typeface=$(sans_typeface)
+
+[front matter section title]
+typeface=$(sans_typeface)
+font_weight=BOLD
+border_top=None
+
+[body matter chapter title]
+border_top=None

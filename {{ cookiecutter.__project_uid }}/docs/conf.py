@@ -22,5 +22,6 @@ rinoh_documents = [
         subtitle=f"v{version}",
         date="",
         domain_indices=False,
+        template="template.rtt",
     ),
 ]
