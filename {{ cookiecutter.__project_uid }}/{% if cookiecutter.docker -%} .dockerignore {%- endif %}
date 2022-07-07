@@ -1,0 +1,7 @@
+docs/
+tests/
+.gitignore
+.pre-commit-config.yaml
+CHANGELOG.md
+noxfile.py
+README.md
