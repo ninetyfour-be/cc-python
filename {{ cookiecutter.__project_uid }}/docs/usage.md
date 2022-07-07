@@ -1,3 +1,11 @@
 # Usage
 
-This chapter describes how to use the project once you are done installing its dependencies.
+This chapter describes how to use the project once you are done installing its dependencies. To use it, you first need to activate the virtual environment as described in the installation instructions.
+
+## Command-line interface
+
+```{eval-rst}
+.. click:: {{cookiecutter.package_name}}.__cli__:main
+    :prog: {{cookiecutter.project_name}}
+    :nested: full
+```
