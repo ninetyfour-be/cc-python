@@ -1,5 +1,6 @@
 [tool.poetry]
 name = "{{ cookiecutter.project_name }}"
+description = "{{ cookiecutter.project_name }}"
 version = "0.1.0"
 authors = ["Ninety Four <ninetyfour.be@gmail.com>"]
 readme = "README.md"
@@ -16,3 +17,7 @@ nox = ">=2022.1.7"
 
 [tool.poetry.scripts]
 {{ cookiecutter.__project_slug }} = "{{ cookiecutter.__package_name }}.__cli__:main"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
