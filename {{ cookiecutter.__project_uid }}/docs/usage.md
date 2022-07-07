@@ -5,7 +5,7 @@ This chapter describes how to use the project once you are done installing its d
 ## Command-line interface
 
 ```{eval-rst}
-.. click:: {{cookiecutter.__package_name}}.__cli__:main
-    :prog: {{cookiecutter.project_name}}
+.. click:: {{ cookiecutter.__package_name }}.__cli__:main
+    :prog: {{ cookiecutter.__project_slug }}
     :nested: full
 ```
