@@ -2,6 +2,13 @@
 
 In this chapter, I explain how to install the project and its dependencies in order to run it on your computer.
 
+{% if cookiecutter.docker -%}
+```{eval-rst}
+.. tip::
+   If you use the *Docker* image, you do not need to install *Python* nor the project itself. To see how to use the image, jump to `Using Docker`_.
+```
+{%- endif %}
+
 ## Install Python
 
 The project has been tested with *Python 3.8* to *Python 3.10*. To ensure the best compatibility, I recommend using version *3.8*. Here are the instructions on how to install it on your computer.
@@ -52,7 +59,7 @@ To create a virtual environment, follow these intructions.
 
 ### On Windows
 
-1. Open *Power Shell* in the directory of the project.
+1. Open *Power Shell* in the directory of the extracted project.
 2. ```
    python38 -m venv .venv
    ```
@@ -67,7 +74,7 @@ To create a virtual environment, follow these intructions.
 
 ### On MacOS
 
-1. Open a terminal in the directory of the project.
+1. Open a terminal in the directory of the extracted project.
 2. Use the following command.  
    ```
    python3.8 -m venv .venv
@@ -83,7 +90,7 @@ To create a virtual environment, follow these intructions.
 
 ### On Linux
 
-1. Open a terminal in the directory of the project.
+1. Open a terminal in the directory of the extracted project.
 2. Use the following command.  
    ```
    python3.8 -m venv .venv
@@ -96,3 +103,17 @@ To create a virtual environment, follow these intructions.
    ```
    python3 -m pip install .
    ```
+
+{% if cookiecutter.docker -%}
+## Using Docker
+
+The first step is to extract the project in a directory where you want to install it.
+
+The whole project is encapsulated in a *Docker* image in the form of a `.tar` file. To install the image on your machine, follow these instructions:
+
+1. Open a terminal in the directory of the extracted project.
+2. Load the image.  
+   ```
+   docker load < {{ cookiecutter.__project_slug }}_*.tar
+   ```
+{%- endif %}
