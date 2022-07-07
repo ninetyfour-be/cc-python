@@ -74,7 +74,10 @@ def release(session: nox.Session) -> None:
         "-9",
         f"{uid}.zip",
         f"{name}.pdf",
-        {% if cookiecutter.docker -%} f"{name}.tar", {%- endif %}
+        {% if cookiecutter.docker -%}
+        f"{name}.tar", 
+        "Dockerfile", 
+        {%- endif %}
         "pyproject.toml",
         "src",
         "tests",
