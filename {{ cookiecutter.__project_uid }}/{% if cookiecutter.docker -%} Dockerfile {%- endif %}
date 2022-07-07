@@ -1,5 +1,8 @@
 FROM python:3.8.13-buster
 
+LABEL author="Ninety Four <ninetyfour.be@gmail.com>"
+LABEL version="0.1.0"
+
 WORKDIR /usr/src/app
 COPY . .
 RUN python3 -m pip install --no-cache-dir .
