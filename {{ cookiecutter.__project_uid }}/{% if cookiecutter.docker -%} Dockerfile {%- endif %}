@@ -1,0 +1,7 @@
+FROM python:3.8.13-buster
+
+WORKDIR /usr/src/app
+COPY . .
+RUN python3 -m pip install --no-cache-dir .
+
+ENTRYPOINT [ "{{ cookiecutter.__project_slug }}" ]

@@ -22,7 +22,25 @@ def doc(session: nox.Session) -> None:
         if path.is_file():
             path.unlink()
     for path in [Path("build") / p for p in {"lib", "bdist.linux-x86_64", "docs/.doctrees"}]:
-        shutil.rmtree(path)
+        try:
+            shutil.rmtree(path)
+        except Exception:
+            pass
+
+
+{% if cookiecutter.docker -%}
+@nox.session(python=False)
+def docker(session: nox.Session) -> None:
+    """Build the Docker image."""
+    import sys
+    sys.path.insert(0, "src")
+    from {{ cookiecutter.__package_name }} import __version__ as version
+
+    tag = f"{{ cookiecutter.__project_slug }}:{version}"
+    Path("build/docker").mkdir(parents=True, exist_ok=True)
+    session.run("docker", "build", "--rm", "--tag", tag, ".")
+    session.run("docker", "save", "--output", f"build/docker/{tag.replace(':', '_')}.tar", tag)
+{%- endif %}
 
 
 @nox.session(python=False)
@@ -32,18 +50,31 @@ def release(session: nox.Session) -> None:
     sys.path.insert(0, "src")
     from {{ cookiecutter.__package_name }} import __version__ as version
 
+    uid = f"{{ cookiecutter.__project_uid }}_{version}"
+    name = f"{{ cookiecutter.__project_slug }}_{version}"
+    # Build documentation
     session.run("nox", "-s", "doc")
     session.run(
         "cp",
-        f"build/docs/{{ cookiecutter.__project_slug }}_{version}.pdf",
-        f"{{ cookiecutter.__project_slug }}_{version}.pdf"
+        f"build/docs/{name}.pdf",
+        f"{name}.pdf"
     )
+    {% if cookiecutter.docker -%}
+    # Build docker image
+    session.run("nox", "-s", "docker")
+    session.run(
+        "cp",
+        f"build/docker/{name}.tar",
+        f"{name}.tar"
+    )
+    {%- endif %}
     session.run(
         "zip",
         "-r",
         "-9",
-        f"{{ cookiecutter.__project_uid }}_{version}.zip",
-        f"{{ cookiecutter.__project_slug }}_{version}.pdf",
+        f"{uid}.zip",
+        f"{name}.pdf",
+        {% if cookiecutter.docker -%} f"{name}.tar", {%- endif %}
         "pyproject.toml",
         "src",
         "tests",
@@ -51,7 +82,7 @@ def release(session: nox.Session) -> None:
         "**/__pycache__**",
         "**/{{ cookiecutter.__package_name }}.egg-info**",
     )
-    session.run("rm", f"{{ cookiecutter.__project_slug }}_{version}.pdf")
+    session.run("rm", f"{name}.pdf"{% if cookiecutter.docker -%} , f"{name}.tar"{%- endif %})
 
 
 @nox.session(python=PYTHON_VERSIONS[0], reuse_venv=True)
