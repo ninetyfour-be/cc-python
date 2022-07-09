@@ -17,6 +17,9 @@ nox = ">=2022.1.7"
 
 [tool.poetry.scripts]
 {{ cookiecutter.__project_slug }} = "{{ cookiecutter.__package_name }}.__cli__:main"
+{% if cookiecutter.gui -%}
+{{ cookiecutter.__project_slug }}-gui = "{{ cookiecutter.__package_name }}.__gui__:main"
+{%- endif %}
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
