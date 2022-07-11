@@ -1,5 +1,6 @@
 """Noxfile for {{ cookiecutter.project_name }}."""
 from pathlib import Path
+import platform
 import shutil
 
 import nox
@@ -43,6 +44,44 @@ def docker(session: nox.Session) -> None:
 {%- endif %}
 
 
+@nox.session(python=PYTHON_VERSIONS[0])
+def executable(session: nox.Session) -> None:
+    """Build an executable."""
+    session.install("pyinstaller", ".")
+    dist_path = str(Path(f"./build/{platform.system().lower().replace('darwin', 'macos')}")),
+    build_path = str(Path(f"./tmp"))
+    session.run(
+        "pyinstaller",
+        "src/{{ cookiecutter.__package_name }}/__cli__.py",
+        "--clean",
+        "--onefile",
+        "--name",
+        "{{ cookiecutter.__project_slug }}",
+        "--console",
+        "--distpath",
+        dist_path,
+        "--workpath",
+        build_path,
+    )
+    {% if cookiecutter.gui -%}
+    session.run(
+        "pyinstaller",
+        "src/{{ cookiecutter.__package_name }}/__gui__.py",
+        "--clean",
+        "--onefile",
+        "--name",
+        "{{ cookiecutter.__project_slug }}-gui",
+        "--windowed",
+        "--distpath",
+        dist_path,
+        "--workpath",
+        build_path,
+    )
+    {%- endif %}
+    shutil.rmtree("tmp")
+
+
+
 @nox.session(python=False)
 def release(session: nox.Session) -> None:
     """Build a release."""
@@ -75,12 +114,14 @@ def release(session: nox.Session) -> None:
         f"{uid}.zip",
         f"{name}.pdf",
         {% if cookiecutter.docker -%}
-        f"{name}.tar", 
-        "Dockerfile", 
+        f"{name}.tar",
+        "Dockerfile",
         {%- endif %}
         "pyproject.toml",
         "src",
         "tests",
+        "build/windows",
+        "build/linux",
         "-x",
         "**/__pycache__**",
         "**/{{ cookiecutter.__package_name }}.egg-info**",
