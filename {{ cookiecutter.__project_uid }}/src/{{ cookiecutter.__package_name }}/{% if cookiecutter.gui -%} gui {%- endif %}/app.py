@@ -6,7 +6,7 @@ from tkinter import ttk
 class App(tk.Tk):
 
     def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
+        super().__init__()
         self.title("{{ cookiecutter.project_name }}")
         self.initialize()
 

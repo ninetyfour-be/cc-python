@@ -1,5 +1,4 @@
 """Graphical interface for {{ cookiecutter.project_name }}."""
-from pydoc import classname
 from {{ cookiecutter.__package_name }}.gui import App
 
 
@@ -10,4 +9,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main(classname="{{ cookiecutter.project_name }}")
+    main()
